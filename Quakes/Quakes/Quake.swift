@@ -8,6 +8,11 @@
 
 import Foundation
 
+
+class QuakeResults: Decodable {
+	let features: [Quake]
+}
+
 // MKAnnotation requires we subclass NSObject
 // Allows us to show data on the a map
 

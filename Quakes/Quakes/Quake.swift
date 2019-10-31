@@ -55,4 +55,8 @@ class Quake: NSObject, Decodable {
 		super.init()
 	}
 	
+	override var description: String {
+		return "\(place) magnitude: \(magnitude)"
+	}
+	
 }

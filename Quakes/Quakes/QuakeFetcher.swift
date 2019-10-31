@@ -50,7 +50,7 @@ class QuakeFetcher {
 			URLQueryItem(name: "starttime", value: startTime),
 			URLQueryItem(name: "endtime", value: endTime),
 			URLQueryItem(name: "format", value: "geojson"),
-			URLQueryItem(name: "orderby", value: "magnitude")	// descending mag
+			URLQueryItem(name: "orderby", value: "magnitude"),	// descending mag
 //			URLQueryItem(name: "minmagnitude", value: "6.5")
 		]
 		
@@ -61,6 +61,7 @@ class QuakeFetcher {
 			completion(nil, QuakeError.invalidURL)
 			return
 		}
+		print(url)
 		
 		URLSession.shared.dataTask(with: url) { (data, _, error) in
 			if let error = error {
@@ -79,6 +80,7 @@ class QuakeFetcher {
 			
 			do {
 				let decoder = JSONDecoder()
+				decoder.dateDecodingStrategy = .millisecondsSince1970
 				
 				let quakeResults = try decoder.decode(QuakeResults.self, from: data)
 				

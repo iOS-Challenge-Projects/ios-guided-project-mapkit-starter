@@ -10,6 +10,10 @@ import Foundation
 
 // must use class (subclass NSObject for MapKit)
 
+struct QuakeResults: Decodable {
+	let features: [Quake]
+}
+
 class Quake: NSObject, Decodable {
 	
 	// mag

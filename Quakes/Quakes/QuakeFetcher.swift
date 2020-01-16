@@ -66,18 +66,20 @@ class QuakeFetcher {
 		URLSession.shared.dataTask(with: url) { (data, _, error) in
 			if let error = error {
 				print("Error fetching quakes: \(error)")
-				completion(nil, error)
+				DispatchQueue.main.async {
+					completion(nil, error)
+				}
 				return
 			}
 			
 			guard let data = data else {
 				print("No data")
-				completion(nil, QuakeError.noDataReturned)
+				DispatchQueue.main.async {
+					completion(nil, QuakeError.noDataReturned)
+				}
 				return
 			}
-			
-			print(data)
-			
+						
 			do {
 				let decoder = JSONDecoder()
 				decoder.dateDecodingStrategy = .millisecondsSince1970
@@ -86,10 +88,14 @@ class QuakeFetcher {
 				
 				let quakes = quakeResults.features
 				
-				completion(quakes, nil)
+				DispatchQueue.main.async {
+					completion(quakes, nil)
+				}
 			} catch {
 				print("Decoding error: \(error)")
-				completion(nil, error)
+				DispatchQueue.main.async {
+					completion(nil, error)
+				}
 			}
 			
 		}.resume()

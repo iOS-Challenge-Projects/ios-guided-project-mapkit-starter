@@ -29,6 +29,8 @@ class QuakesTests: XCTestCase {
 			XCTAssertEqual(1.29, quake.magnitude, accuracy: 0.001)
 			XCTAssertEqual("10km SSW of Idyllwild, CA", quake.place)
 			XCTAssertEqual(date, quake.time)
+			XCTAssertEqual(-116.7776667, quake.longitude, accuracy: 0.001)
+			XCTAssertEqual(33.663333299999998, quake.latitude, accuracy: 0.001)
 			
 		} catch {
 			XCTFail("Error decoding: \(error)")

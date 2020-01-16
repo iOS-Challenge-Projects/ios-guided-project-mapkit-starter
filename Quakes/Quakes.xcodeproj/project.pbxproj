@@ -18,6 +18,7 @@
 		BD6DDD1B23993CB100CA2A91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD6DDD1A23993CB100CA2A91 /* Main.storyboard */; };
 		BDB2727C23D0D0A3005F7A85 /* Quake.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB2727B23D0D0A3005F7A85 /* Quake.swift */; };
 		BDB2727F23D0D6F5005F7A85 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB2727E23D0D6F5005F7A85 /* MapKit.framework */; };
+		BDB2728023D0E244005F7A85 /* QuakeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD482541236B3C4F00FC12E9 /* QuakeDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -225,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD48251A236B3B6600FC12E9 /* AppDelegate.swift in Sources */,
+				BDB2728023D0E244005F7A85 /* QuakeDetailView.swift in Sources */,
 				BDB2727C23D0D0A3005F7A85 /* Quake.swift in Sources */,
 				BD48253C236B3BD500FC12E9 /* EarthquakesViewController.swift in Sources */,
 				BD48251C236B3B6600FC12E9 /* SceneDelegate.swift in Sources */,

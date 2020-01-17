@@ -73,13 +73,13 @@ extension EarthquakesViewController: MKMapViewDelegate {
 		
 		// Color on magnitude
 		
-        if quake.magnitude >= 5 {
-            annotationView.markerTintColor = .red
-        } else if quake.magnitude >= 3 && quake.magnitude < 5 {
-            annotationView.markerTintColor = .orange
-        } else {
-            annotationView.markerTintColor = .yellow
-        }
+		if quake.magnitude >= 5 {
+			annotationView.markerTintColor = .red
+		} else if quake.magnitude >= 3 && quake.magnitude < 5 {
+			annotationView.markerTintColor = .orange
+		} else {
+			annotationView.markerTintColor = .yellow
+		}
 		
 		// Show the popup
 		annotationView.canShowCallout = true

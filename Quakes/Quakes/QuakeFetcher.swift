@@ -84,9 +84,8 @@ class QuakeFetcher {
 				let decoder = JSONDecoder()
 				decoder.dateDecodingStrategy = .millisecondsSince1970
 				
-				let quakeResults = try decoder.decode(QuakeResults.self, from: data)
-				
-				let quakes = quakeResults.features
+				let quakeResults = try decoder.decode(QuakeResults.self, from: data)				
+				let quakes = quakeResults.quakes //features
 				
 				DispatchQueue.main.async {
 					completion(quakes, nil)

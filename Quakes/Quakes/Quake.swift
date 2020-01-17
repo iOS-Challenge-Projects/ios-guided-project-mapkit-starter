@@ -10,7 +10,10 @@ import Foundation
 
 
 class QuakeResults: Decodable {
-	let features: [Quake]
+	let quakes: [Quake]
+	enum CodingKeys: String, CodingKey {
+		case quakes = "features"
+	}
 }
 
 // MKAnnotation requires we subclass NSObject
@@ -29,7 +32,7 @@ class Quake: NSObject, Decodable {
 	let longitude: Double
 	
 	
-	enum QuakeCodingKeys: String, CodingKey {
+	enum CodingKeys: String, CodingKey {
 		case magnitude = "mag"
 		case properties
 		case place
@@ -41,9 +44,9 @@ class Quake: NSObject, Decodable {
 	}
 	
 	required init(from decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: QuakeCodingKeys.self)
-		let properties = try container.nestedContainer(keyedBy: QuakeCodingKeys.self, forKey: .properties)
-		let geometry = try container.nestedContainer(keyedBy: QuakeCodingKeys.self, forKey: .geometry)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let properties = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .properties)
+		let geometry = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .geometry)
 		var coordinates = try geometry.nestedUnkeyedContainer(forKey: .coordinates)
 		
 		self.magnitude = try properties.decode(Double.self, forKey: .magnitude)

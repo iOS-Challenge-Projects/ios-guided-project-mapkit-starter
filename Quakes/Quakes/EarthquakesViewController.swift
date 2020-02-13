@@ -31,7 +31,13 @@ class EarthquakesViewController: UIViewController {
             guard let quakes = quakes else { return }
             
             // TODO: Update the UI
-            print("Quakes: \(quakes)")
+            print("Quakes: \(quakes.count)")
+
+            // Setup MapKit View
+            DispatchQueue.main.async {
+                self.mapView.addAnnotations(quakes)
+                 
+            }
         }
 	}
 }

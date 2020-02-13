@@ -48,3 +48,11 @@ class Quake: NSObject, Decodable {
         super.init()
     }
 }
+
+class QuakeResults: Decodable {
+    let quakes: [Quake]
+    
+    enum CodingKeys: String, CodingKey {
+        case quakes = "features"
+    }
+}

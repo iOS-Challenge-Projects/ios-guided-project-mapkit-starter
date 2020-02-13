@@ -8,8 +8,8 @@
 
 import UIKit
 
-// TODO: Create the Quake class
-// TODO: Add the QuakeDetailView to the target (Identity Inspector) to get it to build
+// Create the Quake class
+// Add the QuakeDetailView to the target (Identity Inspector) to get it to build
 
 class QuakeDetailView: UIView {
     

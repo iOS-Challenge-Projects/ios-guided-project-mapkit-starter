@@ -35,6 +35,10 @@ class Quake: NSObject, Decodable {
         self.magnitude = try properties.decode(Double.self, forKey: .magnitude)
         self.place = try properties.decode(String.self, forKey: .place)
         self.time = try properties.decode(Date.self, forKey: .time)
+
+        // Potentially if our depth data was first, we might need to
+        // "throw" away that value if we don't want to parse
+        //        _ = try coordinates.decode(Double.self) // ignore depth
         self.longitude = try coordinates.decode(Double.self)
         self.latitude = try coordinates.decode(Double.self)
         

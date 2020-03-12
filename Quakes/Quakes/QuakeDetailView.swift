@@ -71,7 +71,11 @@ class QuakeDetailView: UIView {
     private func updateSubviews() {
         guard let quake = quake else { return }
         let magnitude = quake.magnitude
-        magnitudeLabel.text = String(magnitude) + " magnitude"
+        if let magnitude = magnitude {
+            magnitudeLabel.text = String(magnitude) + " magnitude"
+        } else {
+            magnitudeLabel.text = "N/A magnitude"
+        }
         dateLabel.text = dateFormatter.string(from: quake.time)
         latitudeLabel.text = "Lat: " + latLonFormatter.string(from: quake.latitude as NSNumber)!
         longitudeLabel.text = "Lon: " + latLonFormatter.string(from: quake.longitude as NSNumber)!

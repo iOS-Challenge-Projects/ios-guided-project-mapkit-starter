@@ -9,7 +9,7 @@
 import Foundation
 
 class Quake: NSObject, Decodable {
-    let magnitude: Double
+    let magnitude: Double?
     let place: String
     let time: Date
     let latitude: Double
@@ -32,7 +32,7 @@ class Quake: NSObject, Decodable {
         var coordinates = try geometry.nestedUnkeyedContainer(forKey: .coordinates)
         
         // Attributes
-        self.magnitude = try properties.decode(Double.self, forKey: .magnitude)
+        self.magnitude = try? properties.decode(Double.self, forKey: .magnitude) // can be nil
         self.place = try properties.decode(String.self, forKey: .place)
         self.time = try properties.decode(Date.self, forKey: .time)
 

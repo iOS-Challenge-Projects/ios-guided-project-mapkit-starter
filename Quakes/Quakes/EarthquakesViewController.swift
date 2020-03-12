@@ -27,6 +27,11 @@ class EarthquakesViewController: UIViewController {
             
             guard let quakes = quakes else { return }
             print("Quakes: \(quakes.count)")
+            
+            DispatchQueue.main.async {
+                self.mapView.addAnnotations(quakes)
+            }
+            
         }
     }
 }

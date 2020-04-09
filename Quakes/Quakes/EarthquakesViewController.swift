@@ -16,9 +16,9 @@ class EarthquakesViewController: UIViewController {
 	
     var quakeFetcher = QuakeFetcher()
     
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         quakeFetcher.fetchQuakes { (quakes, error) in
             if let error = error {
                 print ("Error fetching quakes: \(error)")
@@ -28,6 +28,9 @@ class EarthquakesViewController: UIViewController {
             guard let quakes = quakes else { return }
             
             print("Quakes: \(quakes.count)")
+            
+            
+            self.mapView.addAnnotations(quakes)
         }
-	}
+    }
 }

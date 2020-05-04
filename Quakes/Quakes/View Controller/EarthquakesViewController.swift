@@ -17,7 +17,6 @@ class EarthquakesViewController: UIViewController {
     
     //MARK: - Outlets
     
-    // NOTE: You need to import MapKit to link to MKMapView
     @IBOutlet var mapView: MKMapView!
     
     //MARK: - View Lifecycle
@@ -28,7 +27,6 @@ class EarthquakesViewController: UIViewController {
         
         //Create a reusable cell
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
-        
         
         fetchQuakes()
     }
@@ -61,14 +59,45 @@ class EarthquakesViewController: UIViewController {
         
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 3, longitudeDelta: 3)
         
-        
+        //FIXME: Check if user allow location if not hotlink to settings
         guard let currentLocation = self.locationManager.location?.coordinate else {
             print("Current location N/A")
             return }
         
+        lookUpCurrentLocation { locationName in
+            DispatchQueue.main.async {
+                self.navigationItem.title = locationName?.locality
+            }
+        }
+        
         let coordinateRegion = MKCoordinateRegion(center: currentLocation, span: coordinateSpan)
         
-        self.mapView.setRegion(coordinateRegion, animated: true)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)
+                    -> Void ) {
+        // Use the last reported location.
+        if let lastLocation = self.locationManager.location {
+            let geocoder = CLGeocoder()
+                
+            // Look up the location and pass it to the completion handler
+            geocoder.reverseGeocodeLocation(lastLocation,
+                        completionHandler: { (placemarks, error) in
+                if error == nil {
+                    let firstLocation = placemarks?[0]
+                    completionHandler(firstLocation)
+                }
+                else {
+                 // An error occurred during geocoding.
+                    completionHandler(nil)
+                }
+            })
+        }
+        else {
+            // No location was available.
+            completionHandler(nil)
+        }
     }
     
     //MARK: - Actions
@@ -86,6 +115,7 @@ extension EarthquakesViewController: MKMapViewDelegate {
         guard let quake = annotation as? Quake else {
             fatalError("Only supporting quakes")
         }
+      
         //Get anotationview
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "QuakeView", for: quake) as? MKMarkerAnnotationView else {
             fatalError("Missing register map anotation")

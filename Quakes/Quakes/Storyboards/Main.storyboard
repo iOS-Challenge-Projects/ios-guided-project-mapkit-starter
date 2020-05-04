@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Earthquakes View Controller-->
+        <!--iQuake-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="EarthquakesViewController" customModule="Quakes" customModuleProvider="target" sceneMemberID="viewController">
@@ -42,9 +42,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="4im-xI-rde">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="e2e-KW-HQb"/>
-                        <barButtonItem key="rightBarButtonItem" image="gear" catalog="system" id="4zs-zx-6tf"/>
+                    <navigationItem key="navigationItem" title="iQuake" id="4im-xI-rde">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="e2e-KW-HQb">
+                            <connections>
+                                <segue destination="GZZ-E0-F2E" kind="presentation" id="glL-bK-43v"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="gear" catalog="system" id="4zs-zx-6tf">
+                            <connections>
+                                <segue destination="yLJ-Ru-VzX" kind="show" id="oU2-eu-yqo"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Lw5-8F-FCH" id="GbV-PA-NI8"/>
@@ -53,6 +61,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="898.55072463768124" y="-546.42857142857144"/>
+        </scene>
+        <!--Search Table View Controller-->
+        <scene sceneID="FZw-di-0D7">
+            <objects>
+                <tableViewController id="GZZ-E0-F2E" customClass="SearchTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="S21-xK-jPt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="RBW-0E-qNW">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Yzd-vP-fy4">
+                                <rect key="frame" x="0.0" y="72" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yzd-vP-fy4" id="Fwh-Jb-vEl">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="GZZ-E0-F2E" id="ERv-CG-9N7"/>
+                            <outlet property="delegate" destination="GZZ-E0-F2E" id="4Mq-FI-Vx0"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VBq-NR-82e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1754" y="-817"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="Qre-23-Iot">
+            <objects>
+                <viewController id="yLJ-Ru-VzX" customClass="SettingsViewController" customModule="Quakes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Gzp-gR-ZDk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="RZ8-P8-OAL"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="vAz-Wa-lLB"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r6o-ic-3Zq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1722" y="-123"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HQe-Bs-i3G">

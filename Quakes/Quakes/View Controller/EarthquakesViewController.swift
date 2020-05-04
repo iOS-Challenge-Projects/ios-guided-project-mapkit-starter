@@ -125,7 +125,7 @@ class EarthquakesViewController: UIViewController {
                 return
             }
         
-            searchVC.quakesArray = self.quakesArray
+            searchVC.quakesArray = self.quakesArray ?? []
         }
     }
 }

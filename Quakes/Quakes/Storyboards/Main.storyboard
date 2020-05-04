@@ -106,6 +106,9 @@
                             <outlet property="delegate" destination="GZZ-E0-F2E" id="4Mq-FI-Vx0"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="searchBar" destination="RBW-0E-qNW" id="ghV-h5-6KH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VBq-NR-82e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -14,7 +14,7 @@ class EarthquakesViewController: UIViewController {
     //MARK: - Properties
     var quakeFetcher = QuakeFetcher()
     fileprivate let locationManager: CLLocationManager = CLLocationManager()
-    
+    var quakesArray: [Quake]?
     //MARK: - Outlets
     
     @IBOutlet var mapView: MKMapView!
@@ -40,11 +40,20 @@ class EarthquakesViewController: UIViewController {
                 return
             }
             guard let quakes = quakes else { return }
+            self.quakesArray = quakes
+            //Find the highest magnitud earthquake
+//            let maxQuake = quakes.max { (a, b) -> Bool in
+//                return Int(a.magnitude!) < Int(b.magnitude!)
+//            }
+//            print("maxQuake\(maxQuake?.place)")
+//            print("maxQuake\(maxQuake?.magnitude)")
+//            print("Ammount of quakes: \(quakes.count)")
             
             DispatchQueue.main.async {
-                //This create the pins on the map
+                //Create annotations
                 self.mapView.addAnnotations(quakes)
                 
+                //Show the user current location to start with
                 self.currentLocation()
                 
             }
@@ -104,6 +113,20 @@ class EarthquakesViewController: UIViewController {
     
     @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
         currentLocation()
+    }
+    
+    
+    //MARK: - prepare
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchSegue"{
+            
+            guard let searchVC = segue.destination as? SearchTableViewController else {
+                print("Cannot downcast SearchVC")
+                return
+            }
+        
+            searchVC.quakesArray = self.quakesArray
+        }
     }
 }
 //MARK: - MKMapViewDelegate

@@ -47,9 +47,12 @@ class Quake: NSObject, Decodable {
         self.magnitude = try? properties.decode(Double.self, forKey: .magnitude)//If nil it wont crash because of the try?
         self.time = try properties.decode(Date.self, forKey: .time)
         self.place = try properties.decode(String.self, forKey: .place)
+        
         //In the API Docs shows the following order in the unkey JSON:
-        self.latitude = try coordinates.decode(Double.self)
+        //IF we put latitude first the it wont work
         self.longitude = try coordinates.decode(Double.self)
+        self.latitude = try coordinates.decode(Double.self)
+        
         
         super.init()
     }

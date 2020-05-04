@@ -9,8 +9,10 @@
 import MapKit
 
 extension Quake: MKAnnotation {
+    
     var coordinate: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude )
     }
     
 

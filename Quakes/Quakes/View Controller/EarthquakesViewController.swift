@@ -32,7 +32,7 @@ class EarthquakesViewController: UIViewController {
                 print("Error fetching quakes: \(error)")
                 return
             }
-            guard let quakes = quakes else {return}
+            guard let quakes = quakes else { return }
             
             DispatchQueue.main.async {
                 //This create the pins on the map
@@ -49,7 +49,6 @@ class EarthquakesViewController: UIViewController {
         }
     }
 }
-
 
 //MARK: - MKMapViewDelegate
 

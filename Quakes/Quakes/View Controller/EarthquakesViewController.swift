@@ -10,23 +10,32 @@ import UIKit
 import MapKit
 
 class EarthquakesViewController: UIViewController {
-		
+    
     //MARK: - Properties
     var quakeFetcher = QuakeFetcher()
+    fileprivate let locationManager: CLLocationManager = CLLocationManager()
     
     //MARK: - Outlets
     
-	// NOTE: You need to import MapKit to link to MKMapView
-	@IBOutlet var mapView: MKMapView!
+    // NOTE: You need to import MapKit to link to MKMapView
+    @IBOutlet var mapView: MKMapView!
     
-	//MARK: - View Lifecycle
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
+    //MARK: - View Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         mapView.delegate = self
+        
         //Create a reusable cell
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
         
+        
+        fetchQuakes()
+    }
+    
+    //MARK: - Setup Methods
+    
+    func fetchQuakes()  {
         quakeFetcher.fetchQuakes { (quakes, error) in
             if let error = error{
                 print("Error fetching quakes: \(error)")
@@ -38,18 +47,36 @@ class EarthquakesViewController: UIViewController {
                 //This create the pins on the map
                 self.mapView.addAnnotations(quakes)
                 
-                guard let quake = quakes.first else { return }
+                self.currentLocation()
                 
-                let coordinateSpan = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
-                
-                let region = MKCoordinateRegion(center: quake.coordinate, span: coordinateSpan)
-                
-                self.mapView.setRegion(region, animated: true)
             }
         }
     }
+    
+    func currentLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.startUpdatingLocation()
+        
+        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 3, longitudeDelta: 3)
+        
+        
+        guard let currentLocation = self.locationManager.location?.coordinate else {
+            print("Current location N/A")
+            return }
+        
+        let coordinateRegion = MKCoordinateRegion(center: currentLocation, span: coordinateSpan)
+        
+        self.mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    //MARK: - Actions
+    
+    @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
+        currentLocation()
+    }
 }
-
 //MARK: - MKMapViewDelegate
 
 extension EarthquakesViewController: MKMapViewDelegate {

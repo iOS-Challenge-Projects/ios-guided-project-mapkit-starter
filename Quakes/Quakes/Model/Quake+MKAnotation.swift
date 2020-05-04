@@ -11,7 +11,7 @@ import MapKit
 extension Quake: MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D {
-        
+        //Each coordinate from quakes will be pass to this
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude )
     }
     

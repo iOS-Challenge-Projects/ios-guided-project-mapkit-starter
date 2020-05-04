@@ -45,7 +45,7 @@
                     <navigationItem key="navigationItem" title="iQuake" id="4im-xI-rde">
                         <barButtonItem key="leftBarButtonItem" systemItem="search" id="e2e-KW-HQb">
                             <connections>
-                                <segue destination="GZZ-E0-F2E" kind="presentation" identifier="SearchSegue" id="glL-bK-43v"/>
+                                <segue destination="GZZ-E0-F2E" kind="show" identifier="SearchSegue" id="glL-bK-43v"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="gear" catalog="system" id="4zs-zx-6tf">
@@ -62,12 +62,12 @@
             </objects>
             <point key="canvasLocation" x="898.55072463768124" y="-546.42857142857144"/>
         </scene>
-        <!--Search Table View Controller-->
+        <!--Search-->
         <scene sceneID="FZw-di-0D7">
             <objects>
                 <tableViewController id="GZZ-E0-F2E" customClass="SearchTableViewController" customModule="Quakes" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="S21-xK-jPt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="RBW-0E-qNW">
@@ -106,6 +106,7 @@
                             <outlet property="delegate" destination="GZZ-E0-F2E" id="4Mq-FI-Vx0"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Search" id="zmI-RT-g4U"/>
                     <connections>
                         <outlet property="searchBar" destination="RBW-0E-qNW" id="ghV-h5-6KH"/>
                     </connections>

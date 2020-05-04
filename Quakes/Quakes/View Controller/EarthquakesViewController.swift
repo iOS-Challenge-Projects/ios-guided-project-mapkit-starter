@@ -1,9 +1,9 @@
 //
-//  EarthquakesViewController.swift
+//  SearchTableTableViewController.swift
 //  Quakes
 //
-//  Created by Paul Solt on 10/3/19.
-//  Copyright © 2019 Lambda, Inc. All rights reserved.
+//  Created by FGT MAC on 5/4/20.
+//  Copyright © 2020 Lambda, Inc. All rights reserved.
 //
 
 import UIKit
@@ -15,6 +15,11 @@ class EarthquakesViewController: UIViewController {
     var quakeFetcher = QuakeFetcher()
     fileprivate let locationManager: CLLocationManager = CLLocationManager()
     var quakesArray: [Quake]?
+    var selectedQuake: Quake?{
+        didSet{
+            print("Got it")
+        }
+    }
     //MARK: - Outlets
     
     @IBOutlet var mapView: MKMapView!

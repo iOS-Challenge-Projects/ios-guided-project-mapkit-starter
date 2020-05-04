@@ -36,10 +36,9 @@ class SearchTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         if searchActive{
             return filteredQuakes.count
-        }else{
-            return quakesArray.count
         }
         
+        return quakesArray.count
     }
     
     
@@ -49,13 +48,14 @@ class SearchTableViewController: UITableViewController {
         
         
         // Configure the cell...
-        var quake = quakesArray[indexPath.row]
-        
-        if searchActive{
-            quake = filteredQuakes[indexPath.row]
-        }else{
-            quake = quakesArray[indexPath.row]
+        var quake: Quake {
+            if searchActive{
+                return filteredQuakes[indexPath.row]
+            }else{
+                return quakesArray[indexPath.row]
+            }
         }
+       
 
         
         //Change the color of the marker base on the severaty of the quake
@@ -84,15 +84,18 @@ class SearchTableViewController: UITableViewController {
         return cell
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
+    override func didReceiveMemoryWarning() {
+         super.didReceiveMemoryWarning()
+         //FIXME: Dispose of any resources that can be recreated.
+        fatalError("Memory warning")
      }
-     */
+ 
 }
 
 //MARK: - UISearchBarDelegate
@@ -101,16 +104,22 @@ extension SearchTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-     
+        
         filteredQuakes = quakesArray.filter({ (quake) -> Bool in
             
             let tmp: NSString = NSString(string: quake.place)
             
-            let range = tmp.range(of: searchText)
+            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             
             return range.location != NSNotFound
         })
         
+        if filteredQuakes.count == 0 {
+            searchActive = false;
+        } else {
+            searchActive = true;
+        }
+        tableView.reloadData()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -124,7 +133,8 @@ extension SearchTableViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false;
     }
-
+    
+   
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false;
         //Hide keyboard

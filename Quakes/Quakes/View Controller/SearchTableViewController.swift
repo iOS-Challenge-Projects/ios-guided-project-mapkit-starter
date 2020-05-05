@@ -12,18 +12,18 @@ class SearchTableViewController: UITableViewController {
     
     
     //MARK: - Properties
-    var quakesArray: [Quake] = []
-    private var searchActive: Bool = false
-    private var filteredQuakes: [Quake] = []{
+    var quakesArray: [Quake]?{
         didSet{
-            tableView.reloadData()
+            if let quakesArray = quakesArray {
+                filtered = quakesArray
+            }
         }
     }
     
+    private var filtered: [Quake]?
     
     //MARK: - Outlets
     @IBOutlet weak var searchBar: UISearchBar!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +34,9 @@ class SearchTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if searchActive{
-            return filteredQuakes.count
-        }
         
-        return quakesArray.count
+        return filtered?.count ?? 1
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -48,95 +44,88 @@ class SearchTableViewController: UITableViewController {
         
         
         // Configure the cell...
-        var quake: Quake {
-            if searchActive{
-                return filteredQuakes[indexPath.row]
+        if let quake =  filtered?[indexPath.row] {
+            
+            //Change the color of the marker base on the severaty of the quake
+            
+            if let magnitude = quake.magnitude {
+                if magnitude >= 5 {
+                    cell.backgroundColor  = .red
+                } else if magnitude >= 3 && magnitude < 5 {
+                    cell.backgroundColor = .orange
+                }else{
+                    cell.backgroundColor = .yellow
+                }
             }else{
-                return quakesArray[indexPath.row]
+                //If there is no magnitude set to white
+                cell.backgroundColor = .white
             }
+            
+            let magnitude = String(quake.magnitude!)
+            
+            cell.textLabel?.text = quake.place
+            cell.detailTextLabel?.text = magnitude
+            
+            
         }
-       
-
-        
-        //Change the color of the marker base on the severaty of the quake
-        
-        if let magnitude = quake.magnitude {
-            if magnitude >= 5 {
-                cell.backgroundColor  = .red
-            } else if magnitude >= 3 && magnitude < 5 {
-                cell.backgroundColor = .orange
-            }else{
-                cell.backgroundColor = .yellow
-            }
-        }else{
-            //If there is no magnitude set to white
-            cell.backgroundColor = .white
-        }
-        
-        let magnitude = String(quake.magnitude!)
-        
-        cell.textLabel?.text = quake.place
-        cell.detailTextLabel?.text = magnitude
-        
-        
-        
-        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        
         navigationController?.popViewController(animated: true)
     }
     
-    
     override func didReceiveMemoryWarning() {
-         super.didReceiveMemoryWarning()
-         //FIXME: Dispose of any resources that can be recreated.
+        super.didReceiveMemoryWarning()
+        //FIXME: Dispose of any resources that can be recreated.
         fatalError("Memory warning")
-     }
- 
+    }
+    
+    //MARK: - Custom methods
+    
+    func loadItems() {
+        
+        filtered = quakesArray
+        
+        tableView.reloadData()
+    }
+    
+    func filterResults(for searchTerm: String) {
+        loadItems()
+        
+        filtered = self.filtered?.filter({ (quake) -> Bool in
+            
+            let cityName: NSString = NSString(string: quake.place)
+            
+            let range = cityName.range(of: searchTerm, options: NSString.CompareOptions.caseInsensitive)
+            
+            return range.location != NSNotFound
+        })
+        
+        //If user clears the searchbar then reload all items
+        if searchBar.text?.count == 0 {
+            loadItems()
+        }
+        tableView.reloadData()
+    }
+    
 }
 
 //MARK: - UISearchBarDelegate
 
 extension SearchTableViewController: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        
-        filteredQuakes = quakesArray.filter({ (quake) -> Bool in
-            
-            let tmp: NSString = NSString(string: quake.place)
-            
-            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
-            
-            return range.location != NSNotFound
-        })
-        
-        if filteredQuakes.count == 0 {
-            searchActive = false;
-        } else {
-            searchActive = true;
+        DispatchQueue.main.async {
+            searchBar.resignFirstResponder()
         }
+        
         tableView.reloadData()
     }
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchActive = true;
-    }
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchActive = false;
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
-    }
-   
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
-        //Hide keyboard
-        searchBar.resignFirstResponder()
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterResults(for: searchText)
     }
 }

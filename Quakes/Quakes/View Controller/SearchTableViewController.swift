@@ -133,7 +133,6 @@ extension SearchTableViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false;
     }
-    
    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false;

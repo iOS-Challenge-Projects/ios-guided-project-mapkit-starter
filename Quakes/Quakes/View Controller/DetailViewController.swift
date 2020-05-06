@@ -18,22 +18,83 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var magnitudeLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
-
+    //MARK: - Properties
+    var selectedQuake: Quake? {
+        didSet{
+            setupLabels()
+        }
+    }
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .short
+        result.timeStyle = .short
+        return result
+    }()
+    
+    private lazy var latLonFormatter: NumberFormatter = {
+         let result = NumberFormatter()
+         result.numberStyle = .decimal
+         result.minimumIntegerDigits = 1
+         result.minimumFractionDigits = 2
+         result.maximumFractionDigits = 2
+         return result
+     }()
+    
+    
+    //MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        mapView.delegate = self
+        
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: - Setup View
+    func setupLabels(){
+        if let quake = selectedQuake{
+            
+            guard let lat = latLonFormatter.string(from: quake.latitude as NSNumber), let lon = latLonFormatter.string(from: quake.longitude as NSNumber) else { return }
+            
+            let date = dateFormatter.string(from: quake.time)
+            
+            placeLabel.text = quake.place
+            
+            dateLabel.text = " Date: \(date)"
+            
+            coodinatesLabel.text = " Lat: \(lat) Lon: \(lon)"
+            
+            if let magnitude = quake.magnitude {
+                magnitudeLabel.text = " Magnitude: \(magnitude)"
+            }else{
+                magnitudeLabel.text = " Magnitude: N/A"
+            }
+            
+            locateOnMap(for: quake.coordinate)
+        }
     }
-    */
+    
+    
+    func locateOnMap(for location: CLLocationCoordinate2D) {
+        
+        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 3, longitudeDelta: 3)
+        
+        let coordinateRegion = MKCoordinateRegion(center: location, span: coordinateSpan)
+        
+//        lookUpCurrentLocation { locationName in
+//            DispatchQueue.main.async {
+//                self.navigationItem.title = locationName?.locality
+//            }
+            
+            self.mapView.setRegion(coordinateRegion, animated: true)
+        
+    }
+    
+}
 
+    //MARK: - MKMapViewDelegate
+extension DetailViewController:  MKMapViewDelegate {
+    
 }

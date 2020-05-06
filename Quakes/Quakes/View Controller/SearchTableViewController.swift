@@ -85,9 +85,11 @@ class SearchTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailViewSegue"{
-            guard let detailVC = segue.destination as? EarthquakesViewController else { return }
-            //detailVC.isDetailView = true
-            //detailVC.selectedQuake = self.selectedQuake
+            guard let detailVC = segue.destination as? DetailViewController else { return }
+            DispatchQueue.main.async {
+                detailVC.selectedQuake = self.selectedQuake
+            }
+            
         }
     }
     

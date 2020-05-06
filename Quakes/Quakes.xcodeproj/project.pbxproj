@@ -83,8 +83,8 @@
 			children = (
 				BD48253B236B3BD500FC12E9 /* EarthquakesViewController.swift */,
 				0461E2FD246015C7004880B8 /* SearchTableViewController.swift */,
-				0461E2FF24601628004880B8 /* SettingsViewController.swift */,
 				04DD48262462ABFB00FEBFED /* DetailViewController.swift */,
+				0461E2FF24601628004880B8 /* SettingsViewController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";

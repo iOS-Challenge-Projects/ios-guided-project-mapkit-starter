@@ -31,7 +31,7 @@ class SearchTableViewController: UITableViewController {
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 70.0
+        tableView.rowHeight = 80.0
         searchBar.delegate = self
     }
     
@@ -58,9 +58,9 @@ class SearchTableViewController: UITableViewController {
             
             if let magnitude = quake.magnitude {
                 if magnitude >= 5 {
-                    cell.backgroundColor = .red
+                    cell.detailTextLabel?.textColor = .red
                 } else if magnitude >= 3 && magnitude < 5 {
-                    cell.backgroundColor = .orange
+                    cell.detailTextLabel?.textColor = .yellow
                 } 
             }
             

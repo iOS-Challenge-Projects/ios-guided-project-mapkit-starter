@@ -71,9 +71,9 @@ class DetailViewController: UIViewController {
                 magnitudeLabel.text = " Magnitude: \(magnitude)"
                 
                 if magnitude >= 5 {
-                    self.view.viewWithTag(1)?.backgroundColor = .red
+                    magnitudeLabel.textColor = .red
                 } else if magnitude >= 3 && magnitude < 5 {
-                    self.view.viewWithTag(1)?.backgroundColor = .orange
+                    magnitudeLabel.textColor = .yellow
                 }
                 
             }else{

@@ -15,18 +15,17 @@ class EarthquakesViewController: UIViewController {
     var quakeFetcher = QuakeFetcher()
     fileprivate let locationManager: CLLocationManager = CLLocationManager()
     var quakesArray: [Quake]?
-    var selectedQuake: Quake?{
-        didSet{
-            print("Got it")
-        }
-    }
     //MARK: - Outlets
     
     @IBOutlet var mapView: MKMapView!
     
+    @IBOutlet weak var searchButton: UIBarButtonItem!
+    
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchButton.isEnabled = false
         
         mapView.delegate = self
         
@@ -34,6 +33,7 @@ class EarthquakesViewController: UIViewController {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
         
         fetchQuakes()
+        
     }
     
     //MARK: - Setup Methods
@@ -44,24 +44,16 @@ class EarthquakesViewController: UIViewController {
                 print("Error fetching quakes: \(error)")
                 return
             }
+            
             guard let quakes = quakes else { return }
             self.quakesArray = quakes
-            //Find the highest magnitud earthquake
-//            let maxQuake = quakes.max { (a, b) -> Bool in
-//                return Int(a.magnitude!) < Int(b.magnitude!)
-//            }
-//            print("maxQuake\(maxQuake?.place)")
-//            print("maxQuake\(maxQuake?.magnitude)")
-//            print("Ammount of quakes: \(quakes.count)")
             
             DispatchQueue.main.async {
+                self.searchButton.isEnabled = true
                 //Create annotations
                 self.mapView.addAnnotations(quakes)
-                
-                //Show the user current location to start with
-                self.currentLocation()
-                
             }
+            self.currentLocation()
         }
     }
     
@@ -71,45 +63,50 @@ class EarthquakesViewController: UIViewController {
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
         
+        if let currentLocation = self.locationManager.location?.coordinate {
+            
+            self.locateOnMap(for: currentLocation)
+        }
+    }
+    
+    func locateOnMap(for location: CLLocationCoordinate2D) {
+        
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 3, longitudeDelta: 3)
         
-        //FIXME: Check if user allow location if not hotlink to settings
-        guard let currentLocation = self.locationManager.location?.coordinate else {
-            print("Current location N/A")
-            return }
+        let coordinateRegion = MKCoordinateRegion(center: location, span: coordinateSpan)
         
         lookUpCurrentLocation { locationName in
             DispatchQueue.main.async {
                 self.navigationItem.title = locationName?.locality
             }
+            
+            self.mapView.setRegion(coordinateRegion, animated: true)
         }
-        
-        let coordinateRegion = MKCoordinateRegion(center: currentLocation, span: coordinateSpan)
-        
-        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)
-                    -> Void ) {
+        -> Void ) {
         // Use the last reported location.
         if let lastLocation = self.locationManager.location {
             let geocoder = CLGeocoder()
-                
+            
             // Look up the location and pass it to the completion handler
             geocoder.reverseGeocodeLocation(lastLocation,
-                        completionHandler: { (placemarks, error) in
-                if error == nil {
-                    let firstLocation = placemarks?[0]
-                    completionHandler(firstLocation)
-                }
-                else {
-                 // An error occurred during geocoding.
-                    completionHandler(nil)
-                }
+                                            completionHandler: { (placemarks, error) in
+                                                if error == nil {
+                                                    let firstLocation = placemarks?[0]
+                                                    completionHandler(firstLocation)
+                                                }
+                                                else {
+                                                    // An error occurred during geocoding.
+                                                    print("Could not locate")
+                                                    completionHandler(nil)
+                                                }
             })
         }
         else {
             // No location was available.
+            print("Could not locate2")
             completionHandler(nil)
         }
     }
@@ -120,6 +117,9 @@ class EarthquakesViewController: UIViewController {
         currentLocation()
     }
     
+    @IBAction func dismissViewButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
     
     //MARK: - prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -129,7 +129,7 @@ class EarthquakesViewController: UIViewController {
                 print("Cannot downcast SearchVC")
                 return
             }
-        
+            
             searchVC.quakesArray = self.quakesArray ?? []
         }
     }
@@ -143,7 +143,7 @@ extension EarthquakesViewController: MKMapViewDelegate {
         guard let quake = annotation as? Quake else {
             fatalError("Only supporting quakes")
         }
-      
+        
         //Get anotationview
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "QuakeView", for: quake) as? MKMarkerAnnotationView else {
             fatalError("Missing register map anotation")

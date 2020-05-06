@@ -22,11 +22,16 @@ class SearchTableViewController: UITableViewController {
     
     private var filtered: [Quake]?
     
+    private var selectedQuake: Quake?
+    
     //MARK: - Outlets
     @IBOutlet weak var searchBar: UISearchBar!
     
+    
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = 70.0
         searchBar.delegate = self
     }
     
@@ -48,32 +53,42 @@ class SearchTableViewController: UITableViewController {
             
             //Change the color of the marker base on the severaty of the quake
             
+            cell.backgroundColor = .white
+            
             if let magnitude = quake.magnitude {
                 if magnitude >= 5 {
                     cell.backgroundColor  = .red
                 } else if magnitude >= 3 && magnitude < 5 {
                     cell.backgroundColor = .orange
-                }else{
-                    cell.backgroundColor = .yellow
-                }
+                } 
             }else{
                 //If there is no magnitude set to white
                 cell.backgroundColor = .white
             }
             
-            let magnitude = String(quake.magnitude!)
             
             cell.textLabel?.text = quake.place
-            cell.detailTextLabel?.text = magnitude
-            
+            if let magnitude = quake.magnitude {
+                let mag = String(magnitude)
+                 cell.detailTextLabel?.text = "Magnitude: \(mag)  Date: 11-11-2010"
+            }
             
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        navigationController?.popViewController(animated: true)
+        if let filtered = filtered {
+        selectedQuake = filtered[indexPath.row]
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailViewSegue"{
+            guard let detailVC = segue.destination as? EarthquakesViewController else { return }
+            //detailVC.isDetailView = true
+            //detailVC.selectedQuake = self.selectedQuake
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,7 +98,6 @@ class SearchTableViewController: UITableViewController {
     }
     
     //MARK: - Custom methods
-    
     func loadItems() {
         
         filtered = quakesArray
@@ -109,7 +123,6 @@ class SearchTableViewController: UITableViewController {
         }
         tableView.reloadData()
     }
-    
 }
 
 //MARK: - UISearchBarDelegate

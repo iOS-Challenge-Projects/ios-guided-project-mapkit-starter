@@ -53,17 +53,15 @@ class SearchTableViewController: UITableViewController {
             
             //Change the color of the marker base on the severaty of the quake
             
-            cell.backgroundColor = .white
+            cell.textLabel?.textColor = .white
+            cell.detailTextLabel?.textColor = .white
             
             if let magnitude = quake.magnitude {
                 if magnitude >= 5 {
-                    cell.backgroundColor  = .red
+                    cell.backgroundColor = .red
                 } else if magnitude >= 3 && magnitude < 5 {
                     cell.backgroundColor = .orange
                 } 
-            }else{
-                //If there is no magnitude set to white
-                cell.backgroundColor = .white
             }
             
             

@@ -55,6 +55,7 @@ class DetailViewController: UIViewController {
     //MARK: - Setup View
     func setupLabels(){
         if let quake = selectedQuake{
+             
             
             guard let lat = latLonFormatter.string(from: quake.latitude as NSNumber), let lon = latLonFormatter.string(from: quake.longitude as NSNumber) else { return }
             
@@ -68,6 +69,13 @@ class DetailViewController: UIViewController {
             
             if let magnitude = quake.magnitude {
                 magnitudeLabel.text = " Magnitude: \(magnitude)"
+                
+                if magnitude >= 5 {
+                    self.view.viewWithTag(1)?.backgroundColor = .red
+                } else if magnitude >= 3 && magnitude < 5 {
+                    self.view.viewWithTag(1)?.backgroundColor = .orange
+                }
+                
             }else{
                 magnitudeLabel.text = " Magnitude: N/A"
             }
@@ -77,8 +85,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    
-    func locateOnMap(for location: CLLocationCoordinate2D) {
+    func locateOnMap(for location: CLLocationCoordinate2D) {   
         
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 3, longitudeDelta: 3)
         

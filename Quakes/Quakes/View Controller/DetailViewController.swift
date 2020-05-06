@@ -73,6 +73,7 @@ class DetailViewController: UIViewController {
             }
             
             locateOnMap(for: quake.coordinate)
+            createAnotation(for: quake.coordinate, quake: quake)
         }
     }
     
@@ -83,18 +84,20 @@ class DetailViewController: UIViewController {
         
         let coordinateRegion = MKCoordinateRegion(center: location, span: coordinateSpan)
         
-//        lookUpCurrentLocation { locationName in
-//            DispatchQueue.main.async {
-//                self.navigationItem.title = locationName?.locality
-//            }
-            
-            self.mapView.setRegion(coordinateRegion, animated: true)
+        self.mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func createAnotation(for location: CLLocationCoordinate2D, quake: Quake)  {
+        let anotation = MKPointAnnotation()
+        anotation.coordinate = location
+        anotation.title = quake.title
         
+        mapView.addAnnotation(anotation)
     }
     
 }
 
-    //MARK: - MKMapViewDelegate
+//MARK: - MKMapViewDelegate
 extension DetailViewController:  MKMapViewDelegate {
     
 }

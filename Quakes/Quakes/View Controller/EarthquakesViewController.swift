@@ -71,7 +71,7 @@ class EarthquakesViewController: UIViewController {
     
     func locateOnMap(for location: CLLocationCoordinate2D) {
         
-        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 3, longitudeDelta: 3)
+        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)
         
         let coordinateRegion = MKCoordinateRegion(center: location, span: coordinateSpan)
         
@@ -120,6 +120,8 @@ class EarthquakesViewController: UIViewController {
     @IBAction func dismissViewButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
+    
     
     //MARK: - prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

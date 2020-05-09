@@ -17,6 +17,7 @@ class Quake: NSObject, Decodable {
         case place
         case latitude
         case longitude
+        case url
         //Second level
         case properties
         //Third level
@@ -30,6 +31,7 @@ class Quake: NSObject, Decodable {
     let place: String
     let latitude: Double
     let longitude: Double
+    let url: String
     
     required init(from decoder: Decoder) throws {
         //Containers to pull out data
@@ -47,6 +49,7 @@ class Quake: NSObject, Decodable {
         self.magnitude = try? properties.decode(Double.self, forKey: .magnitude)//If nil it wont crash because of the try?
         self.time = try properties.decode(Date.self, forKey: .time)
         self.place = try properties.decode(String.self, forKey: .place)
+        self.url = try properties.decode(String.self, forKey: .url)
         
         //In the API Docs shows the following order in the unkey JSON:
         //IF we put latitude first the it wont work

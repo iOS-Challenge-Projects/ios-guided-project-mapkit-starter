@@ -24,22 +24,7 @@ class QuakeDetailView: UIView {
     private let dateLabel = UILabel()
     private let latitudeLabel = UILabel()
     private let longitudeLabel = UILabel()
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateStyle = .short
-        result.timeStyle = .short
-        return result
-    }()
-    
-    private lazy var latLonFormatter: NumberFormatter = {
-        let result = NumberFormatter()
-        result.numberStyle = .decimal
-        result.minimumIntegerDigits = 1
-        result.minimumFractionDigits = 2
-        result.maximumFractionDigits = 2
-        return result
-    }()
+    private var formatter = Formatter()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,8 +61,8 @@ class QuakeDetailView: UIView {
             magnitudeLabel.text = "Magnitude: N/A"
         }
         
-        dateLabel.text = dateFormatter.string(from: quake.time)
-        latitudeLabel.text = "Lat: " + latLonFormatter.string(from: quake.latitude as NSNumber)!
-        longitudeLabel.text = "Lon: " + latLonFormatter.string(from: quake.longitude as NSNumber)!
+        dateLabel.text = formatter.dateFormatter.string(from: quake.time)
+        latitudeLabel.text = "Lat: " + formatter.latLonFormatter.string(from: quake.latitude as NSNumber)!
+        longitudeLabel.text = "Lon: " + formatter.latLonFormatter.string(from: quake.longitude as NSNumber)!
     }
 }

@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum SortBy: String, CaseIterable {
+    case recent
+    case magnitude
+}
+
 class SearchTableViewController: UITableViewController {
     
     
@@ -21,11 +26,12 @@ class SearchTableViewController: UITableViewController {
     }
     
     private var filtered: [Quake]?
-    
     private var selectedQuake: Quake?
+    private var formatter = Formatter()
     
     //MARK: - Outlets
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var sortControl: UISegmentedControl!
     
     
     //MARK: - View Lifecycle
@@ -33,6 +39,7 @@ class SearchTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.rowHeight = 80.0
         searchBar.delegate = self
+        sortResults()
     }
     
     // MARK: - Table view data source
@@ -50,7 +57,7 @@ class SearchTableViewController: UITableViewController {
         
         // Configure the cell...
         if let quake =  filtered?[indexPath.row] {
-            
+            let date = formatter.dateFormatter.string(from: quake.time)
             //Change the color of the marker base on the severaty of the quake
             
             cell.textLabel?.textColor = .white
@@ -66,9 +73,11 @@ class SearchTableViewController: UITableViewController {
             
             
             cell.textLabel?.text = quake.place
+            
             if let magnitude = quake.magnitude {
+                
                 let mag = String(magnitude)
-                 cell.detailTextLabel?.text = "Magnitude: \(mag)  Date: 11-11-2010"
+                 cell.detailTextLabel?.text = "Magnitude: \(mag)  Date: \(date)"
             }
             
         }
@@ -101,7 +110,6 @@ class SearchTableViewController: UITableViewController {
     func loadItems() {
         
         filtered = quakesArray
-        
         tableView.reloadData()
     }
     
@@ -123,6 +131,32 @@ class SearchTableViewController: UITableViewController {
         }
         tableView.reloadData()
     }
+    
+    func sortResults() {
+        let sortIndex = sortControl.selectedSegmentIndex
+        let sortBy = SortBy.allCases[sortIndex]
+        
+        if let filteredArr = filtered  {
+            switch sortBy {
+            case .recent:
+                filtered =  filteredArr.sorted(by: {
+                    $0.time.compare($1.time) == .orderedDescending
+                })
+            case .magnitude:
+                print("magnitude")
+                filtered = filteredArr.sorted(by: { (a, b) -> Bool in
+                    return b.magnitude!.isLess(than: a.magnitude!)
+                })
+            }
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func segmentedButtonPRessed(_ sender: UISegmentedControl) {
+        sortResults()
+    }
+    
+    
 }
 
 //MARK: - UISearchBarDelegate

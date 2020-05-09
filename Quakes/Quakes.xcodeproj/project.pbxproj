@@ -14,6 +14,8 @@
 		04A59447245F18CD0081FF68 /* QuakeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD69304923F5DDAA00C0DF09 /* QuakeFetcher.swift */; };
 		04A59449245F21390081FF68 /* Quake+MKAnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A59448245F21390081FF68 /* Quake+MKAnotation.swift */; };
 		04A5944A245F4F480081FF68 /* QuakeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD482541236B3C4F00FC12E9 /* QuakeDetailView.swift */; };
+		04DC3E802465AE0300CFB3AF /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC3E7F2465AE0300CFB3AF /* Formatter.swift */; };
+		04DC3E822466939300CFB3AF /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC3E812466939300CFB3AF /* WebViewController.swift */; };
 		04DD48272462ABFB00FEBFED /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD48262462ABFB00FEBFED /* DetailViewController.swift */; };
 		04DD48292462FADC00FEBFED /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD48282462FADC00FEBFED /* ChartView.swift */; };
 		659F10BE819CEF6678C78292 /* Pods_Quakes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D2B26E322494EE4578EBCB6 /* Pods_Quakes.framework */; };
@@ -45,6 +47,8 @@
 		04A59442245F08A50081FF68 /* Quake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quake.swift; sourceTree = "<group>"; };
 		04A59445245F16C50081FF68 /* QuakeResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeResults.swift; sourceTree = "<group>"; };
 		04A59448245F21390081FF68 /* Quake+MKAnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Quake+MKAnotation.swift"; sourceTree = "<group>"; };
+		04DC3E7F2465AE0300CFB3AF /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		04DC3E812466939300CFB3AF /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		04DD48262462ABFB00FEBFED /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		04DD48282462FADC00FEBFED /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		3D2B26E322494EE4578EBCB6 /* Pods_Quakes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quakes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +101,7 @@
 				0461E2FD246015C7004880B8 /* SearchTableViewController.swift */,
 				04DD48262462ABFB00FEBFED /* DetailViewController.swift */,
 				0461E2FF24601628004880B8 /* SettingsViewController.swift */,
+				04DC3E812466939300CFB3AF /* WebViewController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -131,6 +136,7 @@
 			children = (
 				BD482519236B3B6600FC12E9 /* AppDelegate.swift */,
 				BD48251B236B3B6600FC12E9 /* SceneDelegate.swift */,
+				04DC3E7F2465AE0300CFB3AF /* Formatter.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DD48272462ABFB00FEBFED /* DetailViewController.swift in Sources */,
+				04DC3E802465AE0300CFB3AF /* Formatter.swift in Sources */,
 				BD48251A236B3B6600FC12E9 /* AppDelegate.swift in Sources */,
 				04A59443245F08A50081FF68 /* Quake.swift in Sources */,
 				BD48253C236B3BD500FC12E9 /* EarthquakesViewController.swift in Sources */,
@@ -391,6 +398,7 @@
 				0461E2FE246015C7004880B8 /* SearchTableViewController.swift in Sources */,
 				04A5944A245F4F480081FF68 /* QuakeDetailView.swift in Sources */,
 				04A59446245F16C60081FF68 /* QuakeResults.swift in Sources */,
+				04DC3E822466939300CFB3AF /* WebViewController.swift in Sources */,
 				BD48251C236B3B6600FC12E9 /* SceneDelegate.swift in Sources */,
 				04DD48292462FADC00FEBFED /* ChartView.swift in Sources */,
 			);

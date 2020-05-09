@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, MKMapViewDelegate {
     
     //MARK: - Outlets
     @IBOutlet weak var placeLabel: UILabel!
@@ -25,23 +25,8 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateStyle = .short
-        result.timeStyle = .short
-        return result
-    }()
-    
-    private lazy var latLonFormatter: NumberFormatter = {
-         let result = NumberFormatter()
-         result.numberStyle = .decimal
-         result.minimumIntegerDigits = 1
-         result.minimumFractionDigits = 2
-         result.maximumFractionDigits = 2
-         return result
-     }()
-    
-    
+    private var formatter = Formatter()
+
     //MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -56,19 +41,18 @@ class DetailViewController: UIViewController {
     func setupLabels(){
         if let quake = selectedQuake{
              
+            guard let lat = formatter.latLonFormatter.string(from: quake.latitude as NSNumber), let lon = formatter.latLonFormatter.string(from: quake.longitude as NSNumber) else { return }
             
-            guard let lat = latLonFormatter.string(from: quake.latitude as NSNumber), let lon = latLonFormatter.string(from: quake.longitude as NSNumber) else { return }
-            
-            let date = dateFormatter.string(from: quake.time)
+            let date = formatter.dateFormatter.string(from: quake.time)
             
             placeLabel.text = quake.place
-            
-            dateLabel.text = " Date: \(date)"
+            //navigationItem.title = quake.place
+            dateLabel.text = date
             
             coodinatesLabel.text = " Lat: \(lat) Lon: \(lon)"
-            
+            print(quake.url)
             if let magnitude = quake.magnitude {
-                magnitudeLabel.text = " Magnitude: \(magnitude)"
+                magnitudeLabel.text = "\(magnitude)"
                 
                 if magnitude >= 5 {
                     magnitudeLabel.textColor = .red
@@ -77,7 +61,7 @@ class DetailViewController: UIViewController {
                 }
                 
             }else{
-                magnitudeLabel.text = " Magnitude: N/A"
+                magnitudeLabel.text = "N/A"
             }
             
             locateOnMap(for: quake.coordinate)
@@ -102,9 +86,13 @@ class DetailViewController: UIViewController {
         mapView.addAnnotation(anotation)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "WebView"{
+            guard let webVC = segue.destination as? WebViewController else {
+               return
+            }
+            webVC.urlString = selectedQuake?.url
+        }
+    }
 }
 
-//MARK: - MKMapViewDelegate
-extension DetailViewController:  MKMapViewDelegate {
-    
-}

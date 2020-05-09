@@ -315,10 +315,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="lbN-JE-lS5" firstAttribute="top" secondItem="dQe-0Q-4eI" secondAttribute="top" id="31c-xv-kJl"/>
                             <constraint firstItem="lbN-JE-lS5" firstAttribute="leading" secondItem="dQe-0Q-4eI" secondAttribute="leading" id="A14-ej-z8G"/>
                             <constraint firstAttribute="bottom" secondItem="lbN-JE-lS5" secondAttribute="bottom" id="E0O-na-HQS"/>
                             <constraint firstItem="lbN-JE-lS5" firstAttribute="trailing" secondItem="dQe-0Q-4eI" secondAttribute="trailing" id="P7A-o5-b4y"/>
+                            <constraint firstItem="lbN-JE-lS5" firstAttribute="top" secondItem="dQe-0Q-4eI" secondAttribute="top" id="guC-YW-1NM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dQe-0Q-4eI"/>
                     </view>

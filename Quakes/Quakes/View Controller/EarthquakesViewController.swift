@@ -71,7 +71,7 @@ class EarthquakesViewController: UIViewController {
     
     func locateOnMap(for location: CLLocationCoordinate2D) {
         
-        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)
+        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
         
         let coordinateRegion = MKCoordinateRegion(center: location, span: coordinateSpan)
         
@@ -151,8 +151,7 @@ extension EarthquakesViewController: MKMapViewDelegate {
             fatalError("Missing register map anotation")
         }
         
-        //Customized base on data
-        annotationView.glyphImage = UIImage(named: "QuakeIcon")
+        annotationView.glyphImage = UIImage(named: "radar")
         
         //Change the color of the marker base on the severaty of the quake
         if let magnitude = quake.magnitude {

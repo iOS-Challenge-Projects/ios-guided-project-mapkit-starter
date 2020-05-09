@@ -50,7 +50,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
             dateLabel.text = date
             
             coodinatesLabel.text = " Lat: \(lat) Lon: \(lon)"
-            print(quake.url)
+
             if let magnitude = quake.magnitude {
                 magnitudeLabel.text = "\(magnitude)"
                 
